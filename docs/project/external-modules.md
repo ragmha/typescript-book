@@ -69,6 +69,7 @@ import { someVar as aDifferentName } from './foo';
 ```
 
 * Import everything from a module into a name with `import * as` e.g.
+
 ```js
 // file `bar.ts`
 import * as foo from './foo';
@@ -100,7 +101,7 @@ export { someVar as aDifferentName } from './foo';
 ```
 
 ### Default exports/imports
-As you will learn later, I am not a fan of default exports. Neverthless here is syntax for export and using default exports
+As you will learn later, I am not a fan of default exports. Nevertheless here is syntax for export and using default exports
 
 * Export using `export default`
   * before a variable (no `let / const / var` needed)
@@ -126,7 +127,7 @@ import someLocalNameForThisFile from "../foo";
 
 > I am just going to assume `moduleResolution: commonjs`. This is the option you should have in your TypeScript config. This setting is implied automatically by `module:commonjs`.
 
-There are two distinct kinds of modules. The distinction is driven by the path section of the import statment (e.g. `import foo from 'THIS IS THE PATH SECTION'`).
+There are two distinct kinds of modules. The distinction is driven by the path section of the import statement (e.g. `import foo from 'THIS IS THE PATH SECTION'`).
 
 * Relative path modules (where path starts with `.` e.g. `./someFile` or `../../someFolder/someFile` etc.)
 * Other dynamic lookup modules (e.g. `'core-js'` or `'typestyle'` or `'react'` or even `'react/core'` etc.)
@@ -178,7 +179,7 @@ You can declare a module *globally* for your project by using `declare module 's
 
 e.g.
 ```ts
-// globals.d.ts
+// global.d.ts
 declare module 'foo' {
   // Some variable declarations
   export var bar: number; /*sample*/
@@ -296,6 +297,6 @@ import bar = require('./bar');
 import bas = require('./bas');
 const ensureImport: any =
     foo
-    || bar
-    || bas;
+    && bar
+    && bas;
 ```

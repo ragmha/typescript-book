@@ -1,6 +1,10 @@
 # React JSX
 
+> [Free series of youtube videos on React / TypeScript best practices](https://www.youtube.com/watch?v=7EW67MqgJvs&list=PLYvdvJlnTOjHNayH7MukKbSJ6PueUNkkG)
+
 > [PRO Egghead course on TypeScript and React](https://egghead.io/courses/use-typescript-to-develop-react-applications)
+
+[![DesignTSX](https://raw.githubusercontent.com/basarat/typescript-book/master/images/designtsx-banner.png)](https://designtsx.com)
 
 ## Setup
 
@@ -13,7 +17,7 @@ Our [browser quickstart already sets you up to develop react applications](../qu
 
 ## HTML Tags vs. Components
 
-React can either render HTML tags (strings) or React components (classes). The JavaScript emit for these elements is different (`React.createElement('div')` vs. `React.createElement(MyComponent)`). The way this is determined is by the *case* of the *first* letter. `foo` is treated as an HTML tag and `Foo` is treated as a component.
+React can either render HTML tags (strings) or React components. The JavaScript emit for these elements is different (`React.createElement('div')` vs. `React.createElement(MyComponent)`). The way this is determined is by the *case* of the *first* letter. `foo` is treated as an HTML tag and `Foo` is treated as a component.
 
 ## Type Checking
 
@@ -34,26 +38,26 @@ declare module JSX {
 }
 ```
 
-### Stateless Functional Components
+### Function Components
 
-You can define stateless components simply with the `React.SFC` interface e.g.
+You can define function components simply with the `React.FunctionComponent` interface e.g.
 
 ```ts
 type Props = {
   foo: string;
 }
-const MyComponent: React.SFC<Props> = (props) => {
+const MyComponent: React.FunctionComponent<Props> = (props) => {
     return <span>{props.foo}</span>
 }
 
 <MyComponent foo="bar" />
 ```
 
-### Stateful Components
+### Class Components
 
 Components are type checked based on the `props` property of the component. This is modeled after how JSX is transformed i.e. the attributes become the `props` of the component.
 
-To create React Stateful components you use ES6 classes. The `react.d.ts` file defines the `React.Component<Props,State>` class which you should extend in your own class providing your own `Props` and `State` interfaces. This is demonstrated below:
+The `react.d.ts` file defines the `React.Component<Props,State>` class which you should extend in your own class providing your own `Props` and `State` interfaces. This is demonstrated below:
 
 ```ts
 type Props = {
@@ -86,7 +90,7 @@ class MyComponent extends React.Component<Props, {}> {
     }
 }
 
-<MyComponent foo="bar" />
+<MyComponent header={<h1>Header</h1>} body={<i>body</i>} />
 ```
 
 ### React JSX Tip: Accept an instance of a Component
@@ -151,7 +155,7 @@ const foo = <T extends {}>(x: T) => x;
 ```
 
 ### React Tip: Strongly Typed Refs 
-You basically initialize a variable as a union of the ref and `null` and then initiazlie it as as callback  e.g. 
+You basically initialize a variable as a union of the ref and `null` and then initialize it as as callback  e.g. 
 
 ```ts
 class Example extends React.Component {
@@ -183,7 +187,7 @@ class FocusingInput extends React.Component<{ value: string, onChange: (value: s
       <input
         ref={(input) => this.input = input}
         value={this.props.value}
-        onChange={(e) => { this.props.onChange(this.ctrls.input.value) } }
+        onChange={(e) => { this.props.onChange(e.target.value) } }
         />
       );
     }
@@ -195,7 +199,7 @@ class FocusingInput extends React.Component<{ value: string, onChange: (value: s
 
 ### Type Assertions
 
-Use `as Foo` syntax for type assertions as we [mentioned before](./type-assertion.md#as-foo-vs-foo).
+Use `as Foo` syntax for type assertions as we [mentioned before](../types/type-assertion.md#as-foo-vs-foo).
 
 ## Default Props
 
@@ -255,4 +259,28 @@ ReactDOM.render(
   <Hello framework="React" />, // TypeScript React
   document.getElementById("root")
 );
+```
+
+## Declaring a webcomponent
+
+If you are using a web component the default React type definitions (`@types/react`) will not know about it. But you can declare it easily e.g. to declare a webcomponent called `my-awesome-slider` that takes Props `MyAwesomeSliderProps` you would: 
+
+```tsx
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'my-awesome-slider': MyAwesomeSliderProps;
+    }
+
+    interface MyAwesomeSliderProps extends React.Attributes {
+      name: string;
+    }
+  }
+}
+```
+
+Now you can use it in TSX:
+
+```tsx
+<my-awesome-slider name='amazing'/>
 ```

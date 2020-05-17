@@ -55,7 +55,51 @@ And because `never` is only assignable to another `never` you can use it for *co
 
 As soon as someone tells you that `never` is returned when a function never exits gracefully you intuitively want to think of it as the same as `void`. However, `void` is a Unit. `never` is a falsum.
 
-A function that *returns* nothing returns a Unit `void`. However, a function *that never returns* (or always throws) returns `never`. `void` is something that can be assigned (without `strictNullChecking`) but `never` can `never` be assigned to anything other than `never`.
+A function that *returns* nothing returns a Unit `void`. However, a function *that never returns* (or always throws) returns `never`. `void` is something that can be assigned (without `strictNullChecking`) but `never` can *never* be assigned to anything other than `never`.
+
+# Type inference in never returning functions
+
+For function declarations TypeScript infers `void` by default as shown below:
+
+```ts
+// Inferred return type: void
+function failDeclaration(message: string) {
+  throw new Error(message);
+}
+
+// Inferred return type: never
+const failExpression = function(message: string) {
+  throw new Error(message);
+};
+```
+
+Ofcourse you can fix it by an explict annotation: 
+
+```ts
+function failDeclaration(message: string): never {
+  throw new Error(message);
+}
+```
+
+Key reason is backword compatability with real world JavaScript code: 
+
+```ts
+class Base {
+    overrideMe() {
+        throw new Error("You forgot to override me!");
+    }
+}
+
+class Derived extends Base {
+    overrideMe() {
+        // Code that actually returns here
+    }
+}
+```
+
+If `Base.overrideMe` . 
+
+> Real world TypeScript can overcome this with `abstract` functions but this inferrence is maintained for compatability.
 
 <!--
 PR: https://github.com/Microsoft/TypeScript/pull/8652

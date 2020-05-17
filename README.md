@@ -30,10 +30,11 @@ I've been looking at the issues that turn up commonly when people start using Ty
 * Thanks, this is a great book 🤓🤓 [link](https://twitter.com/jjwonmin/status/885666375548547073)
 * Deep dive to typescript is awesome in so many levels. i find it very insightful. Thanks [link](https://twitter.com/orenmizr/status/891083492787970053)
 * @basarat's intro to @typescriptlang is still one of the best going (if not THE best) [link](https://twitter.com/stevealee/status/953953255968698368)
+* 
 * This is sweet! So many #typescript goodies! [link](https://twitter.com/pauliescanlon/status/989898852474998784)
 
 ## Get Started
-If you are here to read the book online [get started](http://basarat.gitbooks.io/typescript/content/docs/getting-started.html).
+If you are here to read the book online [get started](https://basarat.gitbook.io/typescript/getting-started).
 
 ## Translations 
 Book is completely free so you can copy paste whatever you want without requiring permission. If you have a translation you want me to link here. [Send a PR](https://github.com/basarat/typescript-book/edit/master/README.md).
@@ -41,15 +42,17 @@ Book is completely free so you can copy paste whatever you want without requirin
 * [Italian](https://github.com/TizioFittizio/typescript-book)
 * [Chinese](https://github.com/jkchao/typescript-book-chinese)
 * [Russian](https://github.com/etroynov/typescript-book)
+* [Portuguese](https://github.com/overlineink/typescript-book)
+* [Japanese](https://github.com/yohamta/typescript-book)
+* [Spanish](https://github.com/melissarofman/typescript-book)
+* [Korean](https://github.com/radlohead/typescript-book)
+* [French](https://github.com/HachemiH/typescript-book)
 
 ## Other Options
-You can also download one of the following:
-* [EPUB for iPad, iPhone, Mac](https://www.gitbook.com/download/epub/book/basarat/typescript)
-* [PDF for Windows and others](https://www.gitbook.com/download/pdf/book/basarat/typescript)
-* [MOBI for Kindle](https://www.gitbook.com/download/mobi/book/basarat/typescript)
+You can also download one of the Epub, Mobi, or PDF formats from the [actions tab](https://github.com/basarat/typescript-book/actions) by clicking on the latest build run. You will find the files in the artifacts section.
 
 ## Special Thanks
 All the amazing [contributors](https://github.com/basarat/typescript-book/graphs/contributors) 🌹
 
 ## Share
-Share URL: http://basarat.gitbooks.io/typescript/
+Share URL: https://basarat.gitbook.io/typescript/

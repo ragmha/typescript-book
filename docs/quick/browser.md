@@ -1,5 +1,7 @@
 # TypeScript in the browser
 
+[![DesignTSX](https://raw.githubusercontent.com/basarat/typescript-book/master/images/designtsx-banner.png)](https://designtsx.com)
+
 If you are using TypeScript to create a web application here are my recommendations to get a quick TypeScript + React (my UI framework of choice) project setup.
 
 ## General Machine Setup
@@ -37,6 +39,7 @@ cd your-project
     "module": "commonjs",
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "experimentalDecorators": true,
     "target": "es5",
     "jsx": "react",
     "lib": [
@@ -85,13 +88,15 @@ cd your-project
 * Create a `webpack.config.js` to bundle your modules into a single `app.js` file that contains all your resources:
 
 ```js
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/app/app.tsx',
   plugins: [
-    new CleanWebpackPlugin(['public/build']),
+    new CleanWebpackPlugin({
+      cleanAfterEveryBuildPatterns: ['public/build']
+    }),
     new HtmlWebpackPlugin({
       template: 'src/templates/index.html'
     }),
@@ -128,7 +133,7 @@ module.exports = {
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-const Hello: React.SFC<{ compiler: string, framework: string }> = (props) => {
+const Hello: React.FunctionComponent<{ compiler: string, framework: string }> = (props) => {
   return (
     <div>
       <div>{props.compiler}</div>

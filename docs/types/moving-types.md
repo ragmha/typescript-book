@@ -53,7 +53,7 @@ class Foo {
 declare let _foo: Foo;
 
 // Same as before
-let bar: typeof _foo.foo;
+let bar: typeof _foo.foo; // `bar` has type `number`
 ```
 
 ## Capturing the type of magic strings
@@ -61,7 +61,7 @@ let bar: typeof _foo.foo;
 Lots of JavaScript libraries and frameworks work off of raw JavaScript strings. You can use `const` variables to capture their type e.g.
 
 ```ts
-// Capture both the *type* and *value* of magic string:
+// Capture both the *type* _and_ *value* of magic string:
 const foo = "Hello World";
 
 // Use the captured type:
@@ -72,7 +72,7 @@ bar = "Hello World"; // Okay!
 bar = "anything else "; // Error!
 ```
 
-In this example `bar` has the literal type `"Hello World"`. We cover this more in the [literal type section](https://basarat.gitbooks.io/typescript/content/docs/types/literal-types.html "Literal Types").
+In this example `bar` has the literal type `"Hello World"`. We cover this more in the [literal type section](./literal-types.md).
 
 ## Capturing Key Names
 
@@ -80,15 +80,15 @@ The `keyof` operator lets you capture the key names of a type. E.g. you can use 
 
 ```ts
 const colors = {
-  red: 'red',
-  blue: 'blue'
+  red: 'reddish',
+  blue: 'bluish'
 }
 type Colors = keyof typeof colors;
 
 let color: Colors; // same as let color: "red" | "blue"
 color = 'red'; // okay
 color = 'blue'; // okay
-color = 'anythingElse'; // Error
+color = 'anythingElse'; // Error: Type '"anythingElse"' is not assignable to type '"red" | "blue"'
 ```
 
 This allows you to have stuff like string enums + constants quite easily, as you just saw in the above example.

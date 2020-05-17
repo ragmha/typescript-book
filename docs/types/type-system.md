@@ -10,7 +10,7 @@ As mentioned before Types are annotated using `:TypeAnnotation` syntax. Anything
 
 The following example demonstrates type annotations for variables, function parameters and function return values:
 
-```
+```ts
 var num: number = 123;
 function identity(num: number): number {
     return num;
@@ -127,7 +127,7 @@ If you are porting JavaScript code to TypeScript, you are going to be close frie
 
 ### `null` and `undefined`
 
-The `null` and `undefined` JavaScript literals are effectively treated by the type system the same as something of type `any`. These literals can be assigned to any other type. This is demonstrated in the below example:
+How they are treated by the type system depends on the `strictNullChecks` compiler flag (we cover this flag later). When in `strictNullCheck:false`, the `null` and `undefined` JavaScript literals are effectively treated by the type system the same as something of type `any`. These literals can be assigned to any other type. This is demonstrated in the below example:
 
 ```ts
 var num: number;
@@ -221,23 +221,14 @@ function formatCommandline(command: string[]|string) {
 
 ```ts
 function extend<T, U>(first: T, second: U): T & U {
-    let result = <T & U> {};
-    for (let id in first) {
-        result[id] = first[id];
-    }
-    for (let id in second) {
-        if (!result.hasOwnProperty(id)) {
-            result[id] = second[id];
-        }
-    }
-    return result;
+  return { ...first, ...second };
 }
 
-var x = extend({ a: "hello" }, { b: 42 });
+const x = extend({ a: "hello" }, { b: 42 });
 
 // x now has both `a` and `b`
-var a = x.a;
-var b = x.b;
+const a = x.a;
+const b = x.b;
 ```
 
 ## Tuple Type

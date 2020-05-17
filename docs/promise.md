@@ -391,6 +391,28 @@ function readFileAsync(filename: string): Promise<any> {
 }
 ```
 
+The most reliable way to do this is to hand write it and it doesn't have to be as verbose as the previous example e.g. converting `setTimeout` into a promisified `delay` function is super easy:
+
+```ts
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+```
+
+Note that there is a handy dandy function in NodeJS that does this `node style function => promise returning function` magic for you:
+
+```ts
+/** Sample usage */
+import fs from 'fs';
+import util from 'util';
+const readFile = util.promisify(fs.readFile);
+```
+
+> Webpack supports the `util` module out of the box and you can use it in the browser as well.
+
+If you have a node callback style function as a *member* be sure to `bind` it as well to make sure it has the correct `this`: 
+
+```ts
+const dbGet = util.promisify(db.get).bind(db);
+```
 
 ### Revisiting the JSON example
 
@@ -451,7 +473,7 @@ function loadItem(id: number): Promise<{ id: number }> {
     });
 }
 
-// Chaining
+// Chained / Sequential
 let item1, item2;
 loadItem(1)
     .then((res) => {
@@ -463,7 +485,7 @@ loadItem(1)
         console.log('done');
     }); // overall time will be around 2s
 
-// Parallel
+// Concurrent / Parallel
 Promise.all([loadItem(1), loadItem(2)])
     .then((res) => {
         [item1, item2] = res;
@@ -485,23 +507,6 @@ Promise.race([task1, task2]).then(function(value) {
   console.log(value); // "one"
   // Both resolve, but task1 resolves faster
 });
-```
-
-### Converting callback functions to promise
-
-The most reliable way to do this is to hand write it. e.g. converting `setTimeout` into a promisified `delay` function is super easy:
-
-```ts
-const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
-```
-
-Note that there is a handy dandy function in NodeJS that does this `node style function => promise returning function` magic for you:
-
-```ts
-/** Sample usage */
-import fs = require('fs');
-import util = require('util');
-const readFile = util.promisify(fs.readFile);
 ```
 
 [polyfill]:https://github.com/stefanpenner/es6-promise
